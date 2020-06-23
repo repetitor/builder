@@ -1,0 +1,38 @@
+WORKSPACE=~/workspace-service-manager
+
+menu-in()
+{
+    echo "IN - $1 - $(date)"
+    echo "$(date): IN - $1" >> $WORKSPACE/log.txt
+}
+
+menu-out()
+{
+    echo -e "OUT - $1 ($2) - $(date)"
+    echo -e "$(date): OUT - $1 ($2)\n" >> $WORKSPACE/log.txt
+}
+
+soft-install()
+{
+    echo test
+}
+
+soft-remove()
+{
+    echo test
+}
+
+container-up()
+{
+    echo test
+}
+
+container-stop()
+{
+    echo test
+}
+
+container-halt()
+{
+    echo test
+}

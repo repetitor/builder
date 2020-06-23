@@ -1,0 +1,65 @@
+standart()
+{
+    . $(dirname "$0")/../../common.lib
+
+    menu=$2
+    menu-in "$menu"
+
+    submenu="0 - CANCEL"
+
+    submenu6="6 - build&up&logIn $1 (go out - exit)"
+    submenu7="7 - stop $1"
+    submenu8="8 - remove $1"
+    submenu9="9 - up&logIn $1 (go out - exit)"
+
+    echo Print number:
+    echo $submenu
+
+    echo $submenu6
+    echo $submenu7
+    echo $submenu8
+    echo $submenu9
+    read n; echo
+
+    case $n in
+    6)
+      submenu=$submenu6
+      mkdir -p $WORKSPACE/vagrant/$2
+      VAGRANT_CWD=$WORKSPACE/vagrant/$2 vagrant init $1
+
+      cp $WORKSPACE/vagrant/$2/Vagrantfile $WORKSPACE/vagrant/$2/Vagrantfile-origin
+      cp $(dirname "$0")/Vagrantfile-$2.example $WORKSPACE/vagrant/$2/Vagrantfile
+      #sed -i -e "s/config.vm.box =.*/config.vm.box = \"$1\"/g" $WORKSPACE/vagrant/$2/Vagrantfile
+
+      cp $(dirname "$0")/bootstrap.example.sh $WORKSPACE/vagrant/$2/bootstrap.sh
+
+      # add record to /etc/hosts
+      sudo bash -c "echo \"192.168.33.$3 vagrant-$2\" >> /etc/hosts"
+
+      VAGRANT_CWD=$WORKSPACE/vagrant/$2 vagrant up
+      VAGRANT_CWD=$WORKSPACE/vagrant/$2 vagrant ssh
+      ;;
+    7)
+      submenu=$submenu7
+      VAGRANT_CWD=$WORKSPACE/vagrant/$2 vagrant halt
+      ;;
+    8)
+      submenu=$submenu8
+      VAGRANT_CWD=$WORKSPACE/vagrant/$2 vagrant destroy -f
+      rm -r $WORKSPACE/vagrant/$2
+      # remove record from /etc/hosts
+      sudo sed "/192.168.33.$3 vagrant-$2/d" -i /etc/hosts
+      ;;
+    9)
+      submenu=$submenu9
+      VAGRANT_CWD=$WORKSPACE/vagrant/$2 vagrant up
+      VAGRANT_CWD=$WORKSPACE/vagrant/$2 vagrant ssh
+      ;;
+    0)
+      ;;
+    *)
+      ;;
+    esac
+
+    menu-out "$menu" "$submenu"
+}
