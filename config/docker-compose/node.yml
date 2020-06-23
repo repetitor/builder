@@ -1,0 +1,15 @@
+version: '3.5'
+
+services:
+
+  nodejs_service:
+    build:
+      context: ""
+      dockerfile: Dockerfile
+    command: npm run dev
+    volumes:
+      - ./nodejs_project:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - $NODEJS_PORT:8080
+    restart: unless-stopped
