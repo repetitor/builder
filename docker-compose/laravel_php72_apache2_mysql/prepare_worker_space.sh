@@ -63,6 +63,9 @@ DOCKER_COMPOSE-do_config-mysql_php $config_source $config_target $app_name
 git clone $app_repository $app_path
 LARAVEL_prepare_env_file $app_path $DB_CONNECTION_DEFAULT "db_service"
 
-# next-steps:
-# cd $worker_path && docker-compose up --build
+
+# next-steps (linux):
+
+# cd $worker_path && docker-compose build && docker-compose up
+
 # cd $path && ./up-in-the-end-only-first-time.sh

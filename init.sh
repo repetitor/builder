@@ -25,3 +25,8 @@ elif [[ "$OSTYPE" == "freebsd"* ]]; then
 else
   echo "Unknown OS"
 fi
+
+# change the EOL from LF to CRLF (windows -> linux)
+for file in `find \. -name "*.sh"`; do
+  sed -i -e 's/\r$//' $file;
+done
