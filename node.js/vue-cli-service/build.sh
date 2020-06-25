@@ -24,7 +24,7 @@ config_target=
 #
 app_repository=
 #
-app_name=$VUECLI_APP_NAME
+app_name=$VUECLISERVICE_APP_NAME
 #
 app_url=
 #
@@ -39,4 +39,19 @@ app_path=$worker_path/$app_name
 #-*-*-*- 39 line
 #
 #
-c_remove_dir $worker_path
+
+sudo npm install -g @vue/cli || npm install -g @vue/cli
+
+c_fresh_dir $worker_path
+
+cd $worker_path
+vue create $app_name
+cd $path
+
+if [[ "$OSTYPE" != "msys" ]]; then
+  npm run serve --prefix $app_path
+else
+  cd $app_path
+  npm run serve
+  cd $path
+fi

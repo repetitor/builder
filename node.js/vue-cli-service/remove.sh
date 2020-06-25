@@ -24,7 +24,7 @@ config_target=
 #
 app_repository=
 #
-app_name=$VUECLI_APP_NAME
+app_name=$VUECLISERVICE_APP_NAME
 #
 app_url=
 #
@@ -39,4 +39,5 @@ app_path=$worker_path/$app_name
 #-*-*-*- 39 line
 #
 #
+
 c_remove_dir $worker_path
