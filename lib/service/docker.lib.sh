@@ -32,16 +32,18 @@ DOCKER-prepare-laravel_provision(){
   sed -i 's@CURRENT_USER_ID=.*@CURRENT_USER_ID='"$UID"'@' $worker_path/provision/laravel/.env
   sed -i 's@CURRENT_GROUP_ID=.*@CURRENT_GROUP_ID='"$(id -g)"'@' $worker_path/provision/laravel/.env
 
-  # if you should edit all .sh files in the repo and change the EOL from LF to CRLF
+  # windows -> linux
   #
+  # if you should change the EOL from LF to CRLF in all .sh files
+  # in the directory ($worker_path) and subdirectories
   #
-  # if
-  # "Bash script and /bin/bash^M: bad interpreter: No such file or directory"
-  # ||
-  # "Windows Docker Error - standard_init_linux.go:211: exec user process caused "no such file or directory""
-  # then
-  # refactor every file (in directory and subdirectories)
-#  for file in `find ${worker_path}/provision -name "*.sh"`; do     sed -i -e 's/\r$//' $file;   done
+  # signs:
+
+  # Bash script and /bin/bash^M: bad interpreter: No such file or directory"
+  # Windows Docker Error - standard_init_linux.go:211: exec user process caused "no such file or directory"
+
+  #  for file in `find ${worker_path}/provision -name "*.sh"`; do     sed -i -e 's/\r$//' $file;   done
+
   for file in `find ${worker_path}/provision -name "*.sh"`; do
     sed -i -e 's/\r$//' $file;
   done

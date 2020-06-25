@@ -2,7 +2,7 @@ FROM php:7.2-apache
 
 RUN apt-get update
 
-# 1. development packages
+# development packages
 RUN apt-get install -y \
 git \
 zip \
@@ -19,15 +19,15 @@ libfreetype6-dev \
 g++ \
 nano
 
-# 2. apache configs + document root
+# apache configs + document root
 ENV APACHE_DOCUMENT_ROOT=/path/to/local/project
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# 3. mod_rewrite for URL rewrite and mod_headers for .htaccess extra headers like Access-Control-Allow-Origin-
+# mod_rewrite for URL rewrite and mod_headers for .htaccess extra headers like Access-Control-Allow-Origin-
 RUN a2enmod rewrite headers
 
-# 4. start with base php config, then add extensions
+# start with base php config, then add extensions
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
 # imagick
@@ -49,8 +49,9 @@ mbstring \
 pdo_mysql \
 zip
 
-# 5. composer
+# install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 WORKDIR /var/www/html
 COPY project_dir .
 
@@ -60,14 +61,5 @@ COPY project_dir .
 
 
 COPY provision/laravel /tmp
-
-# if
-# "Bash script and /bin/bash^M: bad interpreter: No such file or directory"
-# ||
-# "Windows Docker Error - standard_init_linux.go:211: exec user process caused "no such file or directory""
-# then
-# refactor every file (in directory and subdirectories)
-#RUN for file in `find \. -name "*.sh"`; do     sed -i -e 's/\r$//' $file;   done
-#RUN for file in `find \/tmp -name "*.sh"`; do     sed -i -e 's/\r$//' $file;   done
 
 ENTRYPOINT ["/tmp/docker-apache2-entrypoint.sh"]
