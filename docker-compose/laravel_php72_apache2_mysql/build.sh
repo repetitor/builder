@@ -54,7 +54,7 @@ docker-compose build
 docker-compose up -d
 #docker-compose up
 
-# permissions & migrations & php artisan key & ...
-$path/till-the-end-build.sh
-
 cd $path
+
+# permissions & migrations & php artisan key & ...
+$path/up-in-the-end-only-first-time.sh

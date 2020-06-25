@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# delete in future (now only in XYZ)
 DOCKER_COMPOSE-build(){
   local worker_path=$1
   local path_back=$2
@@ -9,6 +10,7 @@ DOCKER_COMPOSE-build(){
   cd $path_back
 }
 
+# delete in future (now only in XYZ)
 DOCKER_COMPOSE-build_out(){
   local worker_path=$1
   local path_back=$2

@@ -67,4 +67,4 @@ LARAVEL_prepare_env_file $app_path $DB_CONNECTION_DEFAULT "db_service"
 DOCKER_COMPOSE-build $worker_path $path
 
 # permissions & migrations
-$path/till-the-end-build.sh
+$path/up-in-the-end-only-first-time.sh

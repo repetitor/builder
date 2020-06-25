@@ -63,5 +63,5 @@ DOCKER_COMPOSE-do_config-mysql_php $config_source $config_target $app_name
 git clone $app_repository $app_path
 LARAVEL_prepare_env_file $app_path $DB_CONNECTION_DEFAULT "db_service"
 
-# build out background & up => till-the-end-build.sh
+# build out background & up => up-in-the-end-only-first-time.sh
 DOCKER_COMPOSE-build_out $worker_path $path
