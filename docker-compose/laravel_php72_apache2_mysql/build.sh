@@ -48,8 +48,13 @@ dockerfile_target=$worker_path/Dockerfile
 
 $path/prepare_worker_space.sh
 
-# build & up
-DOCKER_COMPOSE-build $worker_path $path
+cd $worker_path
 
-# permissions & migrations
+docker-compose build
+docker-compose up -d
+#docker-compose up
+
+# permissions & migrations & php artisan key & ...
 $path/till-the-end-build.sh
+
+cd $path

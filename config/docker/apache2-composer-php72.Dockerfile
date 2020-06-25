@@ -56,8 +56,18 @@ COPY project_dir .
 
 #RUN composer install
 #RUN composer install --prefer-dist
-RUN composer install --ignore-platform-reqs
+#RUN composer install --ignore-platform-reqs
 
-# 6. run container
+
 COPY provision/laravel /tmp
+
+# if
+# "Bash script and /bin/bash^M: bad interpreter: No such file or directory"
+# ||
+# "Windows Docker Error - standard_init_linux.go:211: exec user process caused "no such file or directory""
+# then
+# refactor every file (in directory and subdirectories)
+#RUN for file in `find \. -name "*.sh"`; do     sed -i -e 's/\r$//' $file;   done
+#RUN for file in `find \/tmp -name "*.sh"`; do     sed -i -e 's/\r$//' $file;   done
+
 ENTRYPOINT ["/tmp/docker-apache2-entrypoint.sh"]

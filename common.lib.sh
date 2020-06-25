@@ -22,9 +22,15 @@ c_fresh_dir(){
   local group="${3:-$(id -g)}"
 
   echo "dir $path will be deleted (if exist)"
-  [ -d $path ] && (rm -r $path || sudo rm -r $path)
+  c_remove_dir $path
   mkdir -p $path || sudo mkdir -p $path
   sudo chown -R "$user":"$group" $path
+}
+
+c_remove_dir(){
+  local path=$1
+
+  [ -d $path ] && (rm -rf $path || sudo rm -rf $path)
 }
 
 c_add_to_hosts(){
@@ -87,14 +93,14 @@ c_wait_then_address_will_be_busy(){
 c_curl_wait_200_for_ip(){
   local ip="${1:-$IP_DEFAULT}"
   local port="${2:-$PORT_DEFAULT}"
-  
+
   curl_wait_200 $ip $port
 }
 
 c_curl_wait_200_for_url(){
   local url="${1:-$URL_DEFAULT}"
   local port="${2:-$PORT_DEFAULT}"
-  
+
   curl_wait_200 $url $port
 }
 

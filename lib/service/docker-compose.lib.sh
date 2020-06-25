@@ -26,7 +26,7 @@ DOCKER_COMPOSE-remove(){
     cd $worker_path
     docker-compose stop
     docker-compose down
-    sudo rm -r $worker_path
+    c_remove_dir $worker_path
     cd $path_back
   else
     echo "$worker_path is absent"

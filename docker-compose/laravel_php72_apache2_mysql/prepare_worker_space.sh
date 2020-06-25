@@ -64,5 +64,5 @@ git clone $app_repository $app_path
 LARAVEL_prepare_env_file $app_path $DB_CONNECTION_DEFAULT "db_service"
 
 # next-steps:
-# cd $worker_path && docker-compose up
+# cd $worker_path && docker-compose up --build
 # cd $path && ./till-the-end-build.sh
