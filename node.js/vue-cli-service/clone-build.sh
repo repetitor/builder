@@ -42,6 +42,8 @@ app_path=$worker_path/$app_name
 
 c_fresh_dir $worker_path
 
+npm install -g @vue/cli
+
 git clone $app_repository $app_path
 
 if [[ "$OSTYPE" != "msys" ]]; then
