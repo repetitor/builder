@@ -39,20 +39,22 @@ app_path=$worker_path/$app_name
 #-*-*-*- 39 line
 #
 #
-echo $(basename "$0")
 
-#npm install -g @vue/cli
+#npm install -g vue-cli
 
 c_fresh_dir $worker_path
 
 cd $worker_path
-vue create $app_name
+vue init webpack $app_name
 cd $path
 
+#npm install --prefix $app_path
+#npm run dev --prefix $app_path
+
 if [[ "$OSTYPE" != "msys" ]]; then
-  npm run serve --prefix $app_path
+  npm run dev --prefix $app_path
 else
   cd $app_path
-  npm run serve
+  npm run dev
   cd $path
 fi

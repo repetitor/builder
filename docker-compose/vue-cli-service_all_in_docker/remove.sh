@@ -18,11 +18,11 @@ worker=$(basename $worker_path)
 #
 #-*-*-*- 19 line
 #
-config_source=
+config_source=$root_path/config/$service/node.yml
 #
-config_target=
+config_target=$worker_path/docker-compose.yml
 #
-app_repository=
+app_repository=$TUTORIAL_VUECLISERVICE_REPOSITORY
 #
 app_name=$dir
 #
@@ -30,29 +30,17 @@ app_url=
 #
 app_ip=
 #
-app_port=
+app_port=$TUTORIAL_VUECLISERVICE_DOCKER_PORT
 #
 #. $root_path/lib/framework/
 #
 #-*-*-*- 37 line
 app_path=$worker_path/$app_name
 #-*-*-*- 39 line
+
+dockerfile_source=$root_path/config/docker/node_alpine.Dockerfile
+dockerfile_target=$worker_path/Dockerfile
 #
 #
-echo $(basename "$0")
 
-#npm install -g @vue/cli
-
-c_fresh_dir $worker_path
-
-cd $worker_path
-vue create $app_name
-cd $path
-
-if [[ "$OSTYPE" != "msys" ]]; then
-  npm run serve --prefix $app_path
-else
-  cd $app_path
-  npm run serve
-  cd $path
-fi
+DOCKER_COMPOSE-remove $worker_path $path

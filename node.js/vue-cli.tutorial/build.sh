@@ -22,7 +22,7 @@ config_source=
 #
 config_target=
 #
-app_repository=
+app_repository=$TUTORIAL_VUECLI_REPOSITORY
 #
 app_name=$dir
 #
@@ -39,13 +39,17 @@ app_path=$worker_path/$app_name
 #-*-*-*- 39 line
 #
 #
-sudo npm install -g vue-cli
 
 c_fresh_dir $worker_path
 
-cd $worker_path
-vue init webpack $app_name
-cd $path
+git clone $app_repository $app_path
 
-npm install --prefix $app_path
-npm run dev --prefix $app_path
+if [[ "$OSTYPE" != "msys" ]]; then
+  npm install --prefix $app_path
+  npm run dev --prefix $app_path
+else
+  cd $app_path
+  npm install
+  npm run dev
+  cd $path
+fi

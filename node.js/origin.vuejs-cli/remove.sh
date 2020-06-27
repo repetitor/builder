@@ -39,20 +39,7 @@ app_path=$worker_path/$app_name
 #-*-*-*- 39 line
 #
 #
-echo $(basename "$0")
 
-#npm install -g @vue/cli
+#npm uninstall vue-cli -g
 
-c_fresh_dir $worker_path
-
-cd $worker_path
-vue create $app_name
-cd $path
-
-if [[ "$OSTYPE" != "msys" ]]; then
-  npm run serve --prefix $app_path
-else
-  cd $app_path
-  npm run serve
-  cd $path
-fi
+c_remove_dir $worker_path

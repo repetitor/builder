@@ -18,41 +18,7 @@ worker=$(basename $worker_path)
 #
 #-*-*-*- 19 line
 #
-config_source=
-#
-config_target=
-#
-app_repository=
-#
-app_name=$dir
-#
-app_url=
-#
-app_ip=
-#
-app_port=
-#
-#. $root_path/lib/framework/
-#
-#-*-*-*- 37 line
-app_path=$worker_path/$app_name
-#-*-*-*- 39 line
-#
 #
 echo $(basename "$0")
 
-#npm install -g @vue/cli
-
-c_fresh_dir $worker_path
-
-cd $worker_path
-vue create $app_name
-cd $path
-
-if [[ "$OSTYPE" != "msys" ]]; then
-  npm run serve --prefix $app_path
-else
-  cd $app_path
-  npm run serve
-  cd $path
-fi
+c_remove_dir $worker_path

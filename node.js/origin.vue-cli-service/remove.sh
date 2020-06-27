@@ -21,4 +21,6 @@ worker=$(basename $worker_path)
 #
 echo $(basename "$0")
 
+#npm uninstall vue/cli -g
+
 c_remove_dir $worker_path

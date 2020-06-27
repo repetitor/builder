@@ -18,11 +18,11 @@ worker=$(basename $worker_path)
 #
 #-*-*-*- 19 line
 #
-config_source=
+config_source=$root_path/config/$service/node.yml
 #
-config_target=
+config_target=$worker_path/docker-compose.yml
 #
-app_repository=
+app_repository=$TUTORIAL_VUECLISERVICE_REPOSITORY
 #
 app_name=$dir
 #
@@ -30,13 +30,17 @@ app_url=
 #
 app_ip=
 #
-app_port=
+app_port=$TUTORIAL_VUECLISERVICE_DOCKER_PORT
 #
 #. $root_path/lib/framework/
 #
 #-*-*-*- 37 line
 app_path=$worker_path/$app_name
 #-*-*-*- 39 line
+
+dockerfile_source=$root_path/config/docker/npm_hostinstaller-node_alpine.Dockerfile
+dockerfile_target=$worker_path/Dockerfile
 #
 #
-c_remove_dir $worker_path
+
+DOCKER_COMPOSE-stop $worker_path $path
