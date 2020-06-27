@@ -11,5 +11,6 @@
 # Windows Docker Error - standard_init_linux.go:211: exec user process caused "no such file or directory"
 
 for file in `find \. -name "*.sh"`; do
-  sed -i -e 's/\r$//' $file;
+  sed -i -e 's/\r$//' $file
+  chmod +x $file
 done

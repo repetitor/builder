@@ -7,8 +7,18 @@ function make_sh_files_executable(){
   done
 }
 
+# change the EOL from LF to CRLF (windows -> linux)
+function changeEOLfromLFtoCRLF(){
+  local path=$1
+
+  for file in `find \${path} -name "*.sh"`; do
+    sed -i -e 's/\r$//' $file;
+  done
+}
+
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
   make_sh_files_executable
+  changeEOLfromLFtoCRLF .
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   # Mac OSX
   make_sh_files_executable
@@ -25,8 +35,3 @@ elif [[ "$OSTYPE" == "freebsd"* ]]; then
 else
   echo "Unknown OS"
 fi
-
-# change the EOL from LF to CRLF (windows -> linux)
-for file in `find \. -name "*.sh"`; do
-  sed -i -e 's/\r$//' $file;
-done
