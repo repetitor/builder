@@ -22,7 +22,7 @@ config_source=$root_path/config/$service/default.laravel.conf
 #
 config_target=
 #
-app_repository=$LARAVEL_REPOSITORY
+app_repository=$TUTORIAL_LARAVEL_REPOSITORY
 #
 app_name=
 #

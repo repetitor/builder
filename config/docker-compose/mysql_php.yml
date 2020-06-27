@@ -14,7 +14,7 @@ services:
     networks:
       - app-network
 
-  php_service:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
@@ -23,7 +23,7 @@ services:
     volumes:
       - ./php_project:/var/www/html
       - ./provision/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
-      - ./provision/laravel:/tmp
+#      - ./provision:/tmp
     ports:
       - $PHP_PORT:80
     restart: unless-stopped

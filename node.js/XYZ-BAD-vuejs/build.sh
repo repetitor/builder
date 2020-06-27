@@ -24,7 +24,7 @@ config_target=
 #
 app_repository=$VUEJS_REPOSITORY
 #
-app_name=$VUEJS_APP_NAME
+app_name=$dir
 #
 app_url=
 #

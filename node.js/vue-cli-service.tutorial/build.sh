@@ -22,7 +22,7 @@ config_source=
 #
 config_target=
 #
-app_repository=$VUECLISERVICE_REPOSITORY
+app_repository=$TUTORIAL_VUECLISERVICE_REPOSITORY
 #
 app_name=$dir
 #

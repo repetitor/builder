@@ -2,13 +2,13 @@ version: '3.5'
 
 services:
 
-  nodejs_service:
+  app:
     build:
-      context: ""
+      context: .
       dockerfile: Dockerfile
-    command: npm run dev
+    command: npm run serve
     volumes:
-      - ./nodejs_project:/usr/app/
+      - ./app_project:/usr/app/
       - /usr/app/node_modules
     ports:
       - $NODEJS_PORT:8080

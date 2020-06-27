@@ -24,7 +24,7 @@ config_target=
 #
 app_repository=
 #
-app_name=$VUECLI_APP_NAME
+app_name=$dir
 #
 app_url=
 #

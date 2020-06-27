@@ -24,13 +24,13 @@ config_target=$worker_path/docker-compose.yml
 #
 app_repository=$LARAVEL_REPOSITORY
 #
-app_name=$LARAVEL_APP_NAME
+app_name=$dir
 #
 app_url=
 #
 app_ip=
 #
-app_port=$LARAVEL__DOCKER__PHP72_APACHE2__PORT
+app_port=$LARAVEL_DOCKER_APP_PORT
 #
 . $root_path/lib/framework/laravel.lib.sh
 #
@@ -39,11 +39,11 @@ app_path=$worker_path/$app_name
 #-*-*-*- 39 line
 . $root_path/lib/service/docker.lib.sh
 
-db_port=$LARAVEL__DOCKER__DB_1__PORT
+db_port=$LARAVEL_DOCKER_DB_PORT
 
 dockerfile_source=$root_path/config/docker/apache2-composer-php72.Dockerfile
 dockerfile_target=$worker_path/Dockerfile
 #
 #
 
-DOCKER_COMPOSE-up $worker_path $path
+DOCKER_COMPOSE-stop $worker_path $path

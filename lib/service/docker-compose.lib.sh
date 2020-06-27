@@ -92,6 +92,28 @@ DOCKER_COMPOSE-do_config-mysql_php(){
   sed -i 's@app-network@'"$app_name"'-network@' $target_path
 }
 
+DOCKER_COMPOSE_complete_laravel(){
+  local worker_path=$1
+  local path=$2
+
+  if [[ "$OSTYPE" == "msys" ]]; then
+    echo "*****"; echo "*";
+    echo "Your OS is Windows. Please, run next commands:"; echo "*"
+
+    echo "1) cd $worker_path"; echo "*"
+
+    echo "2) winpty docker-compose exec app bash"; echo "*"
+    echo "3) /tmp/run-first-time.sh"; echo "*"
+    echo "3) exit"
+
+    echo "*"; echo "*"; echo "*"; echo "*"; sleep 300
+  else
+    cd $worker_path
+    docker-compose exec app /tmp/run-first-time.sh
+    cd $path
+  fi
+}
+
 ########################
 ################
 ####
@@ -116,5 +138,5 @@ DOCKER_COMPOSE-do_config-nodejs(){
 
   cp $source_path $target_path
   sed -i 's@nodejs_service@'"$app_name"'@' $target_path
-  sed -i 's@nodejs_project@'"$app_name"'@' $target_path
+  sed -i 's@app_project@'"$app_name"'@' $target_path
 }

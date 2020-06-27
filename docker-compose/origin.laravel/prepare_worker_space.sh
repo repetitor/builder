@@ -24,13 +24,13 @@ config_target=$worker_path/docker-compose.yml
 #
 app_repository=$LARAVEL_REPOSITORY
 #
-app_name=$LARAVEL_APP_NAME
+app_name=$dir
 #
 app_url=
 #
 app_ip=
 #
-app_port=$LARAVEL__DOCKER__PHP72_APACHE2__PORT
+app_port=$LARAVEL_DOCKER_APP_PORT
 #
 . $root_path/lib/framework/laravel.lib.sh
 #
@@ -39,32 +39,33 @@ app_path=$worker_path/$app_name
 #-*-*-*- 39 line
 . $root_path/lib/service/docker.lib.sh
 
-db_port=$LARAVEL__DOCKER__DB_1__PORT
+db_port=$LARAVEL_DOCKER_DB_PORT
 
 dockerfile_source=$root_path/config/docker/apache2-composer-php72.Dockerfile
 dockerfile_target=$worker_path/Dockerfile
 #
 #
-#c_curl_wait_200_or_500 $app_port
-c_wait_then_address_will_be_busy $app_port
+c-if_localport_is_not_free_then_stop $app_port
+$path/remove.sh
+c_fresh_dir $worker_path
 
-cd $worker_path
+# provision
+DOCKER-prepare-laravel_provision $worker_path $root_path/provision
 
-if [[ "$OSTYPE" == "msys" ]]; then
-  echo "*****"; echo "*";
-  echo "Your OS is Windows. Please, run next commands:"; echo "*"
+# Dockerfile
+DOCKER-do_config-apache2_composer_php72 $dockerfile_source $dockerfile_target $app_name
 
-  echo "1) cd $worker_path"; echo "*"
+# docker-compose.yml
+DOCKER_COMPOSE-do_envfile-mysql_php $worker_path $db_port $app_port
+DOCKER_COMPOSE-do_config-mysql_php $config_source $config_target $app_name
 
-  echo "2) winpty docker-compose exec $app_name bash"; echo "*"
-  echo "3) /tmp/run-first-time.sh"; echo "*"
-  echo "3) exit"
+# app
+git clone $app_repository $app_path
+LARAVEL_prepare_env_file $app_path $DB_CONNECTION_DEFAULT "db_service"
 
-  echo "*"; echo "*"; echo "*"; echo "*"; sleep 300
-else
-  docker-compose exec $app_name /tmp/run-first-time.sh
-fi
 
-cd $path
+# next-steps (linux):
 
-c_curl_wait_200_for_ip $IP_DEFAULT $app_port
+# cd $worker_path && docker-compose build && docker-compose up
+
+# cd $path && ./complete.sh

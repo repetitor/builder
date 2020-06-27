@@ -22,11 +22,11 @@ config_source=$root_path/config/$service/laravel.conf
 #
 config_target=
 #
-app_repository=$LARAVEL_REPOSITORY
+app_repository=$TUTORIAL_LARAVEL_REPOSITORY
 #
-app_name=$LARAVEL_APP_NAME
+app_name=$dir
 #
-app_url=$LARAVEL_NGINX_URL
+app_url=$TUTORIAL_LARAVEL_NGINX_URL
 #
 app_ip=
 #

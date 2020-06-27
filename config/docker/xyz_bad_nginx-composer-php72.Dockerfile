@@ -24,7 +24,7 @@ RUN set -x \
 # 5. composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
-COPY project_dir .
+COPY app_project .
 RUN composer install --prefer-dist
 #RUN composer install --ignore-platform-reqs
 

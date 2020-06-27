@@ -59,7 +59,7 @@ cp $dockerfile_source $dockerfile_target
 # prepare_docker_compose
 cp $config_source $config_target
 
-#mkdir $worker_path/nodejs_project
+#mkdir $worker_path/app_project
 
 DOCKER_COMPOSE-build $worker_path $path
 

@@ -14,3 +14,5 @@ for file in `find \. -name "*.sh"`; do
   sed -i -e 's/\r$//' $file
   chmod +x $file
 done
+
+sed -i 's/\r$//' /tmp/.env
