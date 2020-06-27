@@ -22,7 +22,7 @@ config_source=$root_path/config/$service/mysql_php.yml
 #
 config_target=$worker_path/docker-compose.yml
 #
-app_repository=$LARAVEL_REPOSITORY
+app_repository=$TUTORIAL_LARAVEL_REPOSITORY
 #
 app_name=$dir
 #
@@ -30,7 +30,7 @@ app_url=
 #
 app_ip=
 #
-app_port=$LARAVEL_DOCKER_APP_PORT
+app_port=$TUTORIAL_LARAVEL_DOCKER_APP_PORT
 #
 . $root_path/lib/framework/laravel.lib.sh
 #
@@ -39,15 +39,11 @@ app_path=$worker_path/$app_name
 #-*-*-*- 39 line
 . $root_path/lib/service/docker.lib.sh
 
-db_port=$LARAVEL_DOCKER_DB_PORT
+db_port=$TUTORIAL_LARAVEL_DOCKER_DB_PORT
 
 dockerfile_source=$root_path/config/docker/apache2-composer-php72.Dockerfile
 dockerfile_target=$worker_path/Dockerfile
 #
 #
-#c_curl_wait_200_or_500 $app_port
-c_wait_then_address_will_be_busy $app_port
 
-DOCKER_COMPOSE_complete_laravel $worker_path $path
-
-c_curl_wait_200_for_ip $IP_DEFAULT $app_port
+DOCKER_COMPOSE-stop $worker_path $path

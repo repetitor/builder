@@ -49,23 +49,5 @@ dockerfile_target=$worker_path/Dockerfile
 c_wait_then_address_will_be_busy $app_port
 
 DOCKER_COMPOSE_complete_laravel $worker_path $path
-#cd $worker_path
-#
-#if [[ "$OSTYPE" == "msys" ]]; then
-#  echo "*****"; echo "*";
-#  echo "Your OS is Windows. Please, run next commands:"; echo "*"
-#
-#  echo "1) cd $worker_path"; echo "*"
-#
-#  echo "2) winpty docker-compose exec app bash"; echo "*"
-#  echo "3) /tmp/run-first-time.sh"; echo "*"
-#  echo "3) exit"
-#
-#  echo "*"; echo "*"; echo "*"; echo "*"; sleep 300
-#else
-#  docker-compose exec app /tmp/run-first-time.sh
-#fi
-#
-#cd $path
 
 c_curl_wait_200_for_ip $IP_DEFAULT $app_port
