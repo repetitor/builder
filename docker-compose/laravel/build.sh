@@ -49,12 +49,8 @@ dockerfile_target=$worker_path/Dockerfile
 $path/prepare_worker_space.sh
 
 cd $worker_path
-
 docker-compose build
-docker-compose up -d
-#docker-compose up
-
 cd $path
 
 # permissions & migrations & php artisan key & ...
-$path/complete.sh
+DOCKER_COMPOSE_complete_laravel $worker_path $path $app_port

@@ -65,7 +65,7 @@ LARAVEL_prepare_env_file $app_path $DB_CONNECTION_DEFAULT "db_service"
 
 
 # next-steps (linux):
-
-# cd $worker_path && docker-compose build && docker-compose up
-
-# cd $path && ./complete.sh
+# cd $worker_path
+# docker-compose build
+# docker-compose up
+# ...

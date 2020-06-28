@@ -95,23 +95,54 @@ DOCKER_COMPOSE-do_config-mysql_php(){
 DOCKER_COMPOSE_complete_laravel(){
   local worker_path=$1
   local path=$2
+  local app_port=$3
 
   if [[ "$OSTYPE" == "msys" ]]; then
-    echo "*****"; echo "*";
-    echo "Your OS is Windows. Please, run next commands:"; echo "*"
+    DOCKER_COMPOSE_message_up_in_new_window $worker_path
 
-    echo "1) cd $worker_path"; echo "*"
+    echo "After finish of up you will see like:"
+    echo "app_1         | [Sun Jun 28 22:08:56.985778 2020] [core:notice] [pid 493] AH00094: Command line: 'apache2 -D FOREGROUND'"
+    echo "app_1         | 192.168.0.1 - - [28/Jun/2020:22:19:00 +0000] \"GET / HTTP/1.1\" 500 1131710 \"-\" \"curl/7.69.1\""
+    echo "app_1         | 192.168.0.1 - - [28/Jun/2020:22:19:00 +0000] \"GET / HTTP/1.1\" 500 1131710 \"-\" \"curl/7.69.1\""
+    echo "..."
+    echo "*"
+    echo "open OTHER new window-3 with Git Bash and run next commands:"
 
-    echo "2) winpty docker-compose exec app bash"; echo "*"
-    echo "3) /tmp/run-first-time.sh"; echo "*"
-    echo "3) exit"
+    echo " - cd $worker_path"; echo "*"
+    echo " - winpty docker-compose exec app bash"; echo "*"
+    echo " - /tmp/run-first-time.sh"; echo "*"
+    echo " - exit"; echo "*"
 
-    echo "*"; echo "*"; echo "*"; echo "*"; sleep 300
+    DOCKER_COMPOSE_message_again_this_window
   else
     cd $worker_path
+    docker-compose up -d
+    #docker-compose up
+    c_wait_then_address_will_be_busy $app_port
     docker-compose exec app /tmp/run-first-time.sh
     cd $path
   fi
+
+  c_curl_wait_200_for_ip $IP_DEFAULT $app_port
+}
+
+DOCKER_COMPOSE_message_up_in_new_window(){
+  local worker_path=$1
+
+  echo "*****"; echo "*";
+  echo "Your OS is Windows."; echo "*"; echo "*"; echo "*"
+
+  echo "Please, open new window-2 with Git Bash and run next commands:"
+
+  echo " - cd $worker_path"; echo "*"
+  echo " - docker-compose up"; echo "*"
+
+  echo "Approve - 'Share it'"; echo "*"
+}
+
+DOCKER_COMPOSE_message_again_this_window(){
+  echo "After this steps look out the current window (window-1)"
+  echo "*"; echo "*"; echo "*"; echo "*"; sleep 10
 }
 
 ########################

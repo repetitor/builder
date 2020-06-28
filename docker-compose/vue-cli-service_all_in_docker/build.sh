@@ -60,8 +60,15 @@ git clone $app_repository $app_path
 
 cd $worker_path
 docker-compose build
-#docker-compose up -d
-docker-compose up
+
+if [[ "$OSTYPE" != "msys" ]]; then
+  docker-compose up -d
+else
+  DOCKER_COMPOSE_message_up_in_new_window $worker_path
+  DOCKER_COMPOSE_message_again_this_window
+fi
+
+#docker-compose up
 cd $path_back
 
 c_curl_wait_200_for_ip $IP_DEFAULT $app_port

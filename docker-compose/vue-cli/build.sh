@@ -69,7 +69,14 @@ fi
 
 cd $worker_path
 docker-compose build
-docker-compose up -d
+
+if [[ "$OSTYPE" != "msys" ]]; then
+  docker-compose up -d
+else
+  DOCKER_COMPOSE_message_up_in_new_window $worker_path
+  DOCKER_COMPOSE_message_again_this_window
+fi
+
 #docker-compose up
 cd $path_back
 
