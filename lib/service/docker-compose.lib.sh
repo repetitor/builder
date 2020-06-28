@@ -106,6 +106,8 @@ DOCKER_COMPOSE_complete_laravel(){
     echo "app_1         | 192.168.0.1 - - [28/Jun/2020:22:19:00 +0000] \"GET / HTTP/1.1\" 500 1131710 \"-\" \"curl/7.69.1\""
     echo "..."
     echo "*"
+
+    echo "2."; echo "*"
     echo "open OTHER new window-3 with Git Bash and run next commands:"
 
     echo " - cd $worker_path"; echo "*"
@@ -132,6 +134,7 @@ DOCKER_COMPOSE_message_up_in_new_window(){
   echo "*****"; echo "*";
   echo "Your OS is Windows."; echo "*"; echo "*"; echo "*"
 
+  echo "1."; echo "*"
   echo "Please, open new window-2 with Git Bash and run next commands:"
 
   echo " - cd $worker_path"; echo "*"

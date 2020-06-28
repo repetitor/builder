@@ -59,6 +59,7 @@ DOCKER_COMPOSE-node_host_installer $config_target
 
 git clone $app_repository $app_path
 
+echo "now is running - npm install. it takes time."
 if [[ "$OSTYPE" != "msys" ]]; then
   npm install --prefix $app_path
 else
