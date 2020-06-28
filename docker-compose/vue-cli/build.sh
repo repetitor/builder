@@ -69,8 +69,8 @@ fi
 
 cd $worker_path
 docker-compose build
-#docker-compose up -d
-docker-compose up
+docker-compose up -d
+#docker-compose up
 cd $path_back
 
 c_curl_wait_200_for_ip $IP_DEFAULT $app_port

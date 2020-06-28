@@ -54,7 +54,6 @@ cp $dockerfile_source $dockerfile_target
 sed -i 's@app_project@'"$app_name"'@' $worker_path/Dockerfile
 
 DOCKER_COMPOSE-do_config-nodejs $config_source $config_target $app_name
-#sed -i 's@npm run dev@npm run serve@' $config_target
 DOCKER_COMPOSE-node_host_installer $config_target
 
 git clone $app_repository $app_path
