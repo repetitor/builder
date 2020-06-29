@@ -62,4 +62,8 @@ COPY app_project .
 
 COPY provision /tmp
 
+# change the EOL from LF to CRLF (windows -> linux)
+RUN for file in `find /tmp -name "*.sh"`; do     sed -i -e 's/\r$//' $file;   done
+RUN sed -i 's/\r$//' /tmp/.env
+
 ENTRYPOINT ["/tmp/docker-apache2-entrypoint.sh"]
