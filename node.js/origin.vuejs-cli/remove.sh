@@ -18,11 +18,11 @@ worker=$(basename $worker_path)
 #
 #-*-*-*- 19 line
 #
-config_source=$root_path/config/$service/mysql_php.yml
+config_source=
 #
-config_target=$worker_path/docker-compose.yml
+config_target=
 #
-app_repository=$TUTORIAL_LARAVEL_REPOSITORY
+app_repository=
 #
 app_name=$dir
 #
@@ -30,20 +30,16 @@ app_url=
 #
 app_ip=
 #
-app_port=$TUTORIAL_LARAVEL__DOCKER__PHP72_NGINX__PORT
+app_port=
 #
-. $root_path/lib/framework/laravel.lib.sh
+#. $root_path/lib/framework/
 #
 #-*-*-*- 37 line
 app_path=$worker_path/$app_name
 #-*-*-*- 39 line
-. $root_path/lib/service/docker.lib.sh
-
-db_port=$TUTORIAL_LARAVEL__DOCKER__DB_2__PORT
-
-dockerfile_source=$root_path/config/docker/nginx-composer-php72.Dockerfile
-dockerfile_target=$worker_path/Dockerfile
 #
 #
 
-DOCKER_COMPOSE-stop $worker_path $path
+#npm uninstall vue-cli -g
+
+c_remove_dir $worker_path

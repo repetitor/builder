@@ -24,13 +24,13 @@ config_target=$worker_path/docker-compose.yml
 #
 app_repository=$LARAVEL_REPOSITORY
 #
-app_name=$LARAVEL_APP_NAME
+app_name=$dir
 #
 app_url=
 #
 app_ip=
 #
-app_port=$LARAVEL__DOCKER__PHP72_APACHE2__PORT
+app_port=$LARAVEL_DOCKER_APP_PORT
 #
 . $root_path/lib/framework/laravel.lib.sh
 #
@@ -39,32 +39,18 @@ app_path=$worker_path/$app_name
 #-*-*-*- 39 line
 . $root_path/lib/service/docker.lib.sh
 
-db_port=$LARAVEL__DOCKER__DB_1__PORT
+db_port=$LARAVEL_DOCKER_DB_PORT
 
 dockerfile_source=$root_path/config/docker/apache2-composer-php72.Dockerfile
 dockerfile_target=$worker_path/Dockerfile
 #
 #
-#c_curl_wait_200_or_500 $app_port
-c_wait_then_address_will_be_busy $app_port
+
+$path/prepare_worker_space.sh
 
 cd $worker_path
-
-if [[ "$OSTYPE" == "msys" ]]; then
-  echo "*****"; echo "*";
-  echo "Your OS is Windows. Please, run next commands:"; echo "*"
-
-  echo "1) cd $worker_path"; echo "*"
-
-  echo "2) winpty docker-compose exec $app_name bash"; echo "*"
-  echo "3) /tmp/run-first-time.sh"; echo "*"
-  echo "3) exit"
-
-  echo "*"; echo "*"; echo "*"; echo "*"; sleep 300
-else
-  docker-compose exec $app_name /tmp/run-first-time.sh
-fi
-
+docker-compose build
 cd $path
 
-c_curl_wait_200_for_ip $IP_DEFAULT $app_port
+# permissions & migrations & php artisan key & ...
+DOCKER_COMPOSE_complete_laravel $worker_path $path $app_port

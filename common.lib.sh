@@ -31,6 +31,8 @@ c_remove_dir(){
   local path=$1
 
   [ -d $path ] && (rm -rf $path || sudo rm -rf $path)
+  echo dir is deleted
+  sleep 3
 }
 
 c_add_to_hosts(){

@@ -18,40 +18,29 @@ worker=$(basename $worker_path)
 #
 #-*-*-*- 19 line
 #
-config_source=
+config_source=$root_path/config/$service/node.yml
 #
-config_target=
+config_target=$worker_path/docker-compose.yml
 #
-app_repository=$VUECLISERVICE_REPOSITORY
+app_repository=$TUTORIAL_VUECLISERVICE_REPOSITORY
 #
-app_name=$VUECLISERVICE_APP_NAME
+app_name=$dir
 #
 app_url=
 #
 app_ip=
 #
-app_port=
+app_port=$TUTORIAL_VUECLISERVICE_DOCKER_PORT
 #
 #. $root_path/lib/framework/
 #
 #-*-*-*- 37 line
 app_path=$worker_path/$app_name
 #-*-*-*- 39 line
+
+dockerfile_source=$root_path/config/docker/npm_hostinstaller-node_alpine.Dockerfile
+dockerfile_target=$worker_path/Dockerfile
 #
 #
 
-c_fresh_dir $worker_path
-
-npm install -g @vue/cli
-
-git clone $app_repository $app_path
-
-if [[ "$OSTYPE" != "msys" ]]; then
-  npm install --prefix $app_path
-  npm run serve --prefix $app_path
-else
-  cd $app_path
-  npm install
-  npm run serve
-  cd $path
-fi
+DOCKER_COMPOSE-up $worker_path $path

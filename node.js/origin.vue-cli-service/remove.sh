@@ -18,31 +18,9 @@ worker=$(basename $worker_path)
 #
 #-*-*-*- 19 line
 #
-config_source=
 #
-config_target=
-#
-app_repository=$VUEJS_REPOSITORY
-#
-app_name=$dir
-#
-app_url=
-#
-app_ip=
-#
-app_port=
-#
-#. $root_path/lib/framework/
-#
-#-*-*-*- 37 line
-app_path=$worker_path/$app_name
-#-*-*-*- 39 line
-#
-#
-c_fresh_dir $app_path
+echo $(basename "$0")
 
-git clone $app_repository $app_path
-npm install --prefix $app_path
+#npm uninstall vue/cli -g
 
-#?????????
-npm run dev --prefix $app_path
+c_remove_dir $worker_path

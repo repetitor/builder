@@ -18,48 +18,31 @@ worker=$(basename $worker_path)
 #
 #-*-*-*- 19 line
 #
-config_source=$root_path/config/$service/laravel.conf
+config_source=$root_path/config/$service/mysql_php.yml
 #
-config_target=
+config_target=$worker_path/docker-compose.yml
 #
-app_repository=$TUTORIAL_LARAVEL_REPOSITORY
+app_repository=$LARAVEL_REPOSITORY
 #
 app_name=$dir
 #
-app_url=$TUTORIAL_LARAVEL_APACHE2_URL
+app_url=
 #
 app_ip=
 #
-app_port=
+app_port=$LARAVEL_DOCKER_APP_PORT
 #
 . $root_path/lib/framework/laravel.lib.sh
 #
 #-*-*-*- 37 line
 app_path=$worker_path/$app_name
 #-*-*-*- 39 line
+. $root_path/lib/service/docker.lib.sh
+
+db_port=$LARAVEL_DOCKER_DB_PORT
+
+dockerfile_source=$root_path/config/docker/apache2-composer-php72.Dockerfile
+dockerfile_target=$worker_path/Dockerfile
 #
 #
-# before action:
-# - up database (example in readme.md)
-
-c_fresh_dir $app_path
-
-git clone $app_repository $app_path
-LARAVEL_prepare_env_file $app_path
-
-cd $app_path
-LARAVEL_install
-php artisan migrate:fresh --seed
-cd $path
-
-APACHE2_add_site $config_source $app_url $app_path
-
-LARAVEL_permissions $app_path
-
-c_add_to_hosts $app_url
-
-#c_curl_wait_200_for_ip
-c_curl_wait_200_for_url $app_url
-
-#c_add_info $dir_serviceChild_path $app_url
-c_add_info $worker_path $app_url
+DOCKER_COMPOSE-remove $worker_path $path

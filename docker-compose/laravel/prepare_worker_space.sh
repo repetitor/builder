@@ -22,15 +22,15 @@ config_source=$root_path/config/$service/mysql_php.yml
 #
 config_target=$worker_path/docker-compose.yml
 #
-app_repository=$LARAVEL_REPOSITORY
+app_repository=$TUTORIAL_LARAVEL_REPOSITORY
 #
-app_name=$LARAVEL_APP_NAME
+app_name=$dir
 #
 app_url=
 #
 app_ip=
 #
-app_port=$LARAVEL__DOCKER__PHP72_APACHE2__PORT
+app_port=$TUTORIAL_LARAVEL_DOCKER_APP_PORT
 #
 . $root_path/lib/framework/laravel.lib.sh
 #
@@ -39,7 +39,7 @@ app_path=$worker_path/$app_name
 #-*-*-*- 39 line
 . $root_path/lib/service/docker.lib.sh
 
-db_port=$LARAVEL__DOCKER__DB_1__PORT
+db_port=$TUTORIAL_LARAVEL_DOCKER_DB_PORT
 
 dockerfile_source=$root_path/config/docker/apache2-composer-php72.Dockerfile
 dockerfile_target=$worker_path/Dockerfile
@@ -65,7 +65,7 @@ LARAVEL_prepare_env_file $app_path $DB_CONNECTION_DEFAULT "db_service"
 
 
 # next-steps (linux):
-
-# cd $worker_path && docker-compose build && docker-compose up
-
-# cd $path && ./up-in-the-end-only-first-time.sh
+# cd $worker_path
+# docker-compose build
+# docker-compose up
+# ...

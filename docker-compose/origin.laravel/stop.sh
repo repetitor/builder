@@ -18,26 +18,32 @@ worker=$(basename $worker_path)
 #
 #-*-*-*- 19 line
 #
-config_source=
+config_source=$root_path/config/$service/mysql_php.yml
 #
-config_target=
+config_target=$worker_path/docker-compose.yml
 #
-app_repository=
+app_repository=$LARAVEL_REPOSITORY
 #
-app_name=$VUECLISERVICE_APP_NAME
+app_name=$dir
 #
 app_url=
 #
 app_ip=
 #
-app_port=
+app_port=$LARAVEL_DOCKER_APP_PORT
 #
-#. $root_path/lib/framework/
+. $root_path/lib/framework/laravel.lib.sh
 #
 #-*-*-*- 37 line
 app_path=$worker_path/$app_name
 #-*-*-*- 39 line
+. $root_path/lib/service/docker.lib.sh
+
+db_port=$LARAVEL_DOCKER_DB_PORT
+
+dockerfile_source=$root_path/config/docker/apache2-composer-php72.Dockerfile
+dockerfile_target=$worker_path/Dockerfile
 #
 #
 
-c_remove_dir $worker_path
+DOCKER_COMPOSE-stop $worker_path $path

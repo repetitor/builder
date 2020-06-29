@@ -7,4 +7,4 @@ RUN vue init webpack app
 
 WORKDIR /usr/app
 RUN npm install
-COPY nodejs_project .
+COPY app_project .

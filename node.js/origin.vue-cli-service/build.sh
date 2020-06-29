@@ -18,32 +18,41 @@ worker=$(basename $worker_path)
 #
 #-*-*-*- 19 line
 #
-config_source=$root_path/config/$service/mysql_php.yml
+config_source=
 #
-config_target=$worker_path/docker-compose.yml
+config_target=
 #
-app_repository=$LARAVEL_REPOSITORY
+app_repository=
 #
-app_name=$LARAVEL_APP_NAME
+app_name=$dir
 #
 app_url=
 #
 app_ip=
 #
-app_port=$LARAVEL__DOCKER__PHP72_APACHE2__PORT
+app_port=
 #
-. $root_path/lib/framework/laravel.lib.sh
+#. $root_path/lib/framework/
 #
 #-*-*-*- 37 line
 app_path=$worker_path/$app_name
 #-*-*-*- 39 line
-. $root_path/lib/service/docker.lib.sh
-
-db_port=$LARAVEL__DOCKER__DB_1__PORT
-
-dockerfile_source=$root_path/config/docker/apache2-composer-php72.Dockerfile
-dockerfile_target=$worker_path/Dockerfile
 #
 #
+echo $(basename "$0")
 
-DOCKER_COMPOSE-stop $worker_path $path
+#npm install -g @vue/cli
+
+c_fresh_dir $worker_path
+
+cd $worker_path
+vue create $app_name
+cd $path
+
+if [[ "$OSTYPE" != "msys" ]]; then
+  npm run serve --prefix $app_path
+else
+  cd $app_path
+  npm run serve
+  cd $path
+fi

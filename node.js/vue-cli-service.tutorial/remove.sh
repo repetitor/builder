@@ -18,34 +18,7 @@ worker=$(basename $worker_path)
 #
 #-*-*-*- 19 line
 #
-config_source=
 #
-config_target=
-#
-app_repository=
-#
-app_name=$VUECLI_APP_NAME
-#
-app_url=
-#
-app_ip=
-#
-app_port=
-#
-#. $root_path/lib/framework/
-#
-#-*-*-*- 37 line
-app_path=$worker_path/$app_name
-#-*-*-*- 39 line
-#
-#
-sudo npm install -g vue-cli
+echo $(basename "$0")
 
-c_fresh_dir $worker_path
-
-cd $worker_path
-vue init webpack $app_name
-cd $path
-
-npm install --prefix $app_path
-npm run dev --prefix $app_path
+c_remove_dir $worker_path

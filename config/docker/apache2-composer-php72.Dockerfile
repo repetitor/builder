@@ -53,13 +53,17 @@ zip
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
-COPY project_dir .
+COPY app_project .
 
 #RUN composer install
 #RUN composer install --prefer-dist
 #RUN composer install --ignore-platform-reqs
 
 
-COPY provision/laravel /tmp
+COPY provision /tmp
+
+# change the EOL from LF to CRLF (windows -> linux)
+RUN for file in `find /tmp -name "*.sh"`; do     sed -i -e 's/\r$//' $file;   done
+RUN sed -i 's/\r$//' /tmp/.env
 
 ENTRYPOINT ["/tmp/docker-apache2-entrypoint.sh"]

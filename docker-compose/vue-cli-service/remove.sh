@@ -18,11 +18,11 @@ worker=$(basename $worker_path)
 #
 #-*-*-*- 19 line
 #
-config_source=$root_path/config/$service/mysql_php.yml
+config_source=$root_path/config/$service/node.yml
 #
 config_target=$worker_path/docker-compose.yml
 #
-app_repository=$TUTORIAL_LARAVEL_REPOSITORY
+app_repository=$TUTORIAL_VUECLISERVICE_REPOSITORY
 #
 app_name=$dir
 #
@@ -30,20 +30,17 @@ app_url=
 #
 app_ip=
 #
-app_port=$TUTORIAL_LARAVEL__DOCKER__PHP72_NGINX__PORT
+app_port=$TUTORIAL_VUECLISERVICE_HOSTINSTALLER_DOCKER_PORT
 #
-. $root_path/lib/framework/laravel.lib.sh
+#. $root_path/lib/framework/
 #
 #-*-*-*- 37 line
 app_path=$worker_path/$app_name
 #-*-*-*- 39 line
-. $root_path/lib/service/docker.lib.sh
 
-db_port=$TUTORIAL_LARAVEL__DOCKER__DB_2__PORT
-
-dockerfile_source=$root_path/config/docker/nginx-composer-php72.Dockerfile
+dockerfile_source=$root_path/config/docker/npm_hostinstaller-node_alpine.Dockerfile
 dockerfile_target=$worker_path/Dockerfile
 #
 #
 
-DOCKER_COMPOSE-stop $worker_path $path
+DOCKER_COMPOSE-remove $worker_path $path

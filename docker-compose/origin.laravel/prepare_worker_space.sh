@@ -24,13 +24,13 @@ config_target=$worker_path/docker-compose.yml
 #
 app_repository=$LARAVEL_REPOSITORY
 #
-app_name=$LARAVEL_APP_NAME
+app_name=$dir
 #
 app_url=
 #
 app_ip=
 #
-app_port=$LARAVEL__DOCKER__PHP72_APACHE2__PORT
+app_port=$LARAVEL_DOCKER_APP_PORT
 #
 . $root_path/lib/framework/laravel.lib.sh
 #
@@ -39,22 +39,33 @@ app_path=$worker_path/$app_name
 #-*-*-*- 39 line
 . $root_path/lib/service/docker.lib.sh
 
-db_port=$LARAVEL__DOCKER__DB_1__PORT
+db_port=$LARAVEL_DOCKER_DB_PORT
 
 dockerfile_source=$root_path/config/docker/apache2-composer-php72.Dockerfile
 dockerfile_target=$worker_path/Dockerfile
 #
 #
+c-if_localport_is_not_free_then_stop $app_port
+$path/remove.sh
+c_fresh_dir $worker_path
 
-$path/prepare_worker_space.sh
+# provision
+DOCKER-prepare-laravel_provision $worker_path $root_path/provision
 
-cd $worker_path
+# Dockerfile
+DOCKER-do_config-apache2_composer_php72 $dockerfile_source $dockerfile_target $app_name
 
-docker-compose build
-docker-compose up -d
-#docker-compose up
+# docker-compose.yml
+DOCKER_COMPOSE-do_envfile-mysql_php $worker_path $db_port $app_port
+DOCKER_COMPOSE-do_config-mysql_php $config_source $config_target $app_name
 
-cd $path
+# app
+git clone $app_repository $app_path
+LARAVEL_prepare_env_file $app_path $DB_CONNECTION_DEFAULT "db_service"
 
-# permissions & migrations & php artisan key & ...
-$path/up-in-the-end-only-first-time.sh
+
+# next-steps (linux):
+# cd $worker_path
+# docker-compose build
+# docker-compose up
+# ...

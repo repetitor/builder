@@ -22,30 +22,26 @@ config_source=$root_path/config/$service/node.yml
 #
 config_target=$worker_path/docker-compose.yml
 #
-app_repository=
+app_repository=$TUTORIAL_VUECLI_REPOSITORY
 #
-#app_name=
+app_name=$dir
 #
 app_url=
 #
 app_ip=
 #
-app_port=$VUECLI_DOCKER_NPM_ALPINE_PORT
+app_port=$TUTORIAL_VUECLI_HOSTINSTALLER_DOCKER_PORT
 #
 #. $root_path/lib/framework/
 #
 #-*-*-*- 37 line
 app_path=$worker_path/$app_name
 #-*-*-*- 39 line
-. $root_path/lib/project/SMP.lib.sh
 
-dockerfile_source=$root_path/config/docker/vue_cli-node_alpine.Dockerfile
+dockerfile_source=$root_path/config/docker/npm_hostinstaller-node_alpine.Dockerfile
 dockerfile_target=$worker_path/Dockerfile
 #
 #
-
-
-SERVICE_prepare_worker_space $worker_path $path $app_port
 
 c-if_localport_is_not_free_then_stop $app_port
 $path/remove.sh
@@ -55,12 +51,34 @@ DOCKER_COMPOSE-do_envfile-nodejs $worker_path $app_port
 
 # Dockerfile
 cp $dockerfile_source $dockerfile_target
+sed -i 's@app_project@'"$app_name"'@' $worker_path/Dockerfile
 
-# prepare_docker_compose
-cp $config_source $config_target
+DOCKER_COMPOSE-do_config-nodejs $config_source $config_target $app_name
+sed -i 's@npm run serve@npm run dev@' $config_target
+DOCKER_COMPOSE-node_host_installer $config_target
 
-#mkdir $worker_path/app_project
+git clone $app_repository $app_path
 
-DOCKER_COMPOSE-build $worker_path $path
+echo "now is running - npm install. it takes time."
+if [[ "$OSTYPE" != "msys" ]]; then
+  npm install --prefix $app_path
+else
+  cd $app_path
+  npm install
+  cd $path
+fi
+
+cd $worker_path
+docker-compose build
+
+if [[ "$OSTYPE" != "msys" ]]; then
+  docker-compose up -d
+else
+  DOCKER_COMPOSE_message_up_in_new_window $worker_path
+  DOCKER_COMPOSE_message_again_this_window
+fi
+
+#docker-compose up
+cd $path_back
 
 c_curl_wait_200_for_ip $IP_DEFAULT $app_port
