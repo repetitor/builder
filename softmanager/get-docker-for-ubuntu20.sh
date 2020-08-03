@@ -508,3 +508,6 @@ do_install
 ### repetitor
 sudo usermod -aG docker bo
 sudo apt install docker-compose -y
+
+
+sudo apt autoremove
