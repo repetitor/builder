@@ -126,3 +126,10 @@ docker system prune
 ## slang
 - url - site.local
 - ip - 127.93.17.11
+
+## tips
+
+### Dockerfile
+```
+RUN cat /etc/os-release
+```
